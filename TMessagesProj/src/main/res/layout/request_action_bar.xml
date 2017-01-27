@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+    android:background="@color/common_signin_btn_dark_text_default"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+    android:weightSum="4"
+    android:id="@+id/request_action_bar">
+    <!--Back-->
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/audioload1"
+        android:id="@+id/ib_action_back"/>
+        <!--Nudge-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/audioload1"
+            android:id="@+id/ib_action_nudge"/>
+        <!--Request Photo-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/audioload1"
+            android:id="@+id/ib_action_photo"/>
+        <!--Request video-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/audioload1"
+            android:id="@+id/ib_action_video"/>
+        <!--Request Location-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/audioload1"
+            android:id="@+id/ib_action_location"/>
+    </LinearLayout>

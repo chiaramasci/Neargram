@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+    android:layout_gravity="bottom"
+    android:weightSum="7">
+        <!--Do action-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/audioload1"
+            android:id="@+id/ib_action"/>
+        <!--Take a photo-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_photo"
+            android:id="@+id/ib_take_photo"/>
+        <!--Choose from Gallery-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_gallery"
+            android:id="@+id/ib_gallery"/>
+        <!--Music-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_music"
+            android:id="@+id/ib_music"/>
+        <!--Video-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_video"
+            android:id="@+id/ib_video"/>
+        <!--File-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ab_doc"
+            android:id="@+id/ib_file"/>
+        <!--Location-->
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_attach_location"
+            android:id="@+id/ib_location"/>
+    </LinearLayout>
