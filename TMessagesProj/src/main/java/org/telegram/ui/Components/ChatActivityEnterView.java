@@ -8,18 +8,26 @@
 
 package org.telegram.ui.Components;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.ImageSpan;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -28,17 +36,27 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.chiara.Prediction;
+import com.chiara.TimeIdentifier;
+import com.chiara.Timer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.telegram.android.AndroidUtilities;
 import org.telegram.android.Emoji;
 import org.telegram.android.LocaleController;
@@ -59,6 +77,11 @@ import org.telegram.ui.AnimationCompat.ObjectAnimatorProxy;
 import org.telegram.ui.AnimationCompat.ViewProxy;
 
 import java.lang.reflect.Field;
+import java.net.MalformedURLException;
+import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
+
+import static org.telegram.android.volley.VolleyLog.TAG;
 
 public class ChatActivityEnterView extends LinearLayout implements NotificationCenter.NotificationCenterDelegate, SizeNotifierRelativeLayout.SizeNotifierRelativeLayoutDelegate {
 
@@ -106,7 +129,29 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
     private boolean ignoreTextChange;
     private ChatActivityEnterViewDelegate delegate;
 
-    public ChatActivityEnterView(Activity context, SizeNotifierRelativeLayout parent, BaseFragment fragment, boolean isChat) {
+    /**to detect TypingSpeed, backspaceFrequency, erasedLength and TouchCount*/
+    String enteredText = "";
+    int numberOfBackspace;
+    int commentLength;
+    double backspaceFrequency;
+    int erasedTextLength;
+    int time;
+    String partOfTheDay;
+    double typingSpeed;
+    int contentViewTouchCount = 0;
+    int keyboardTouchCount = 0;
+    int touchCount = 0;
+    String weather;
+    String mWeather;
+    String context;
+
+    Timer timer;
+    long startPause;
+    long totalTime;
+    boolean startPauseBool;
+
+
+    public ChatActivityEnterView(final Activity context, SizeNotifierRelativeLayout parent, BaseFragment fragment, boolean isChat) {
         super(context);
         setOrientation(HORIZONTAL);
         //setBackgroundResource(R.drawable.compose_panel);
@@ -129,7 +174,7 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
         sendByEnter = preferences.getBoolean("send_by_enter", false);
 
-        FrameLayoutFixed frameLayout = new FrameLayoutFixed(context);
+        final FrameLayoutFixed frameLayout = new FrameLayoutFixed(context);
         addView(frameLayout);
         LayoutParams layoutParams = (LayoutParams) frameLayout.getLayoutParams();
         layoutParams.width = 0;
@@ -199,7 +244,13 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
                     }
                     return true;
                 } else if (i == KeyEvent.KEYCODE_ENTER && sendByEnter && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                    sendMessage();
+                    try {
+                        sendMessage();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 }
                 return false;
@@ -217,21 +268,68 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEND) {
-                    sendMessage();
+                    try {
+                        sendMessage();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     return true;
                 } else if (sendByEnter) {
                     if (keyEvent != null && i == EditorInfo.IME_NULL && keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-                        sendMessage();
+                        try {
+                            sendMessage();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         return true;
                     }
                 }
                 return false;
             }
         });
+        numberOfBackspace = 0;
+
+        /**detecting whether the keyboard is open*/
+        frameLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+
+                Rect r = new Rect();
+                frameLayout.getWindowVisibleDisplayFrame(r);
+                int screenHeight = frameLayout.getRootView().getHeight();
+
+                // r.bottom is the position above soft keypad or device button.
+                // if keypad is shown, the r.bottom is smaller than that before.
+                int keypadHeight = screenHeight - r.bottom;
+
+                if (keypadHeight > screenHeight * 0.15) {
+                    if(timer != null){
+                        //restarting timer??
+                        frameLayout.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                contentViewTouchCount += 1;
+                            }
+                        });
+                    }
+                }
+                else {
+                    // keyboard is closed
+                    if(timer != null) {
+                        //pausing timer??
+                        frameLayout.setOnClickListener(null);
+                    }
+                }
+            }
+        });
+
         messsageEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-
             }
 
             @Override
@@ -257,12 +355,34 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
                         delegate.needSendTyping();
                     }
                 }
+
+                /**to start the timer for typing speed*/
+                timer = new Timer();
+                timer.getStartTime();
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                keyboardTouchCount += 1;
+                //Toast.makeText(context,"touchCount "+Integer.toString(keyboardTouchCount),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"enteredText "+ enteredText,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context,"editable "+ editable.toString(),Toast.LENGTH_SHORT).show();
+
+                if (enteredText.length() > editable.toString().length()){
+                    numberOfBackspace += 1;
+                    erasedTextLength += enteredText.length() - editable.toString().length();
+                }
+
+                enteredText = editable.toString();
+
                 if (sendByEnter && editable.length() > 0 && editable.charAt(editable.length() - 1) == '\n') {
-                    sendMessage();
+                    try {
+                        sendMessage();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
                 int i = 0;
                 ImageSpan[] arrayOfImageSpan = editable.getSpans(0, editable.length(), ImageSpan.class);
@@ -275,6 +395,7 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
                     editable.removeSpan(arrayOfImageSpan[i]);
                     i++;
                 }
+
             }
         });
 
@@ -493,7 +614,13 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendMessage();
+                try {
+                    sendMessage();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -540,7 +667,7 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
         dialog_id = id;
     }
 
-    private void sendMessage() {
+    private void sendMessage() throws ExecutionException, InterruptedException {
         if (parentFragment != null) {
             String action = null;
             TLRPC.Chat currentChat = null;
@@ -559,10 +686,23 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
             }
         }
         if (processSendingText(messsageEditText.getText().toString())) {
-            messsageEditText.setText("");
+            //obtaining the length of the message necessary for the prediction
+            commentLength = messsageEditText.getText().toString().trim().length();
             lastTypingTimeSend = 0;
+            //resetting the field
+            messsageEditText.setText("");
+
             if (delegate != null) {
                 delegate.onMessageSend();
+                try {
+                    getData();
+                    resetData();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             }
         }
     }
@@ -839,6 +979,179 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
             });
             runningAnimationAudio.setInterpolator(new AccelerateDecelerateInterpolator());
             runningAnimationAudio.start();
+        }
+    }
+
+    /**data collection in order to evaluate the emotion*/
+    private void getData() throws ExecutionException, InterruptedException {
+        timer.getEndTime();
+        totalTime = timer.getTotalTime();
+        Log.i("total time + p :)",Long.toString(totalTime));
+        Log.i("total time - p :(",Long.toString(timer.getTotalTimeWithoutPauses()));
+
+        numberOfBackspace = numberOfBackspace - 1; //questo perché fa casini prima
+        erasedTextLength = erasedTextLength - commentLength; //anche questo perché fa casini all'invio
+
+        /**backspace frequency*/
+        backspaceFrequency = (double)numberOfBackspace/ (double)commentLength;
+
+        /**part of the day*/
+        time = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        partOfTheDay = new TimeIdentifier().getPartOfDay(time);
+
+        /**typing speed*/
+        typingSpeed = (double)commentLength/(double)totalTime;
+
+        /**touch count*/
+        touchCount = keyboardTouchCount + contentViewTouchCount;
+
+        /**context*/
+        int tColor = AndroidUtilities.getIntColor("themeColor");
+
+        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+        ImageButton contextButton = (ImageButton) findViewById(R.id.ib_context);
+
+        if (contextButton.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_context_work).getConstantState()) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("imgActualContext",R.drawable.ic_context_work);
+            editor.commit();
+            context = "Work";
+        } else if (contextButton.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_context_entertainment).getConstantState())
+        {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("imgActualContext",R.drawable.ic_context_entertainment);
+            editor.commit();
+            context = "Entertainment";
+        } else if(contextButton.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_context_commute).getConstantState()){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("imgActualContext",R.drawable.ic_context_commute);
+            editor.commit();
+            context = "Commute";
+        } else if(contextButton.getDrawable().getConstantState() == getResources().getDrawable( R.drawable.ic_context_home).getConstantState()){
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putInt("imgActualContext",R.drawable.ic_context_home);
+            editor.commit();
+            context = "Home";
+        }else{
+            Log.i("DIOCANE","tutto a puttane");
+            String tag = String.valueOf(contextButton.getTag());
+            Log.i("tag", tag);
+
+            if(tag == "home"){
+                context = "Home";
+            }else if (tag == "work"){
+                context = "Work";
+            }else if (tag == "commute"){
+                context = "Commute";
+            }else if (tag == "entertainment"){
+                context = "Entertainment";
+            }
+        }
+
+        /**weather obtaining location from preferences*/
+        if(context == "Home"){
+            String lat = preferences.getString("latHome","");
+            String lon = preferences.getString("longHome","");
+            String[] latAndLon = {lat,lon};
+            mWeather = new getWeather()
+                    .execute(latAndLon)
+                    .get();
+        }else if(context == "Work"){
+            String lat = preferences.getString("latWork","");
+            String lon = preferences.getString("longWork","");
+            String[] latAndLon = {lat,lon};
+            mWeather = new getWeather()
+                    .execute(latAndLon)
+                    .get();
+        }else if(context == "Entertainment"){
+            String lat = preferences.getString("latEntertainment","");
+            String lon = preferences.getString("longEntertainment","");
+            String[] latAndLon = {lat,lon};
+            mWeather = new getWeather()
+                    .execute(latAndLon)
+                    .get();
+        }else if (context == "Commute"){
+            String lat = preferences.getString("latHome","");
+            String lon = preferences.getString("longHome","");
+            String[] latAndLon = {lat,lon};
+            mWeather = new getWeather()
+                    .execute(latAndLon)
+                    .get();
+        }
+
+        Log.i("frequenza backspace",Double.toString(backspaceFrequency));
+        Log.i("erased text length",Integer.toString(erasedTextLength));
+        Log.i("part of the day",partOfTheDay);
+        Log.i("typing speed (time!!)",Double.toString(typingSpeed));
+        Log.i("touch count",Integer.toString(touchCount));
+        Log.i("comment length",Integer.toString(commentLength));
+        Log.i("number of Backspace",Integer.toString(numberOfBackspace));
+        Log.i("context",context);
+        Log.i("mWeather ",mWeather);
+
+
+        String prediction = new Prediction(context,numberOfBackspace,commentLength,backspaceFrequency,erasedTextLength,partOfTheDay,typingSpeed,touchCount,mWeather).doPrediction();
+        Log.i("prediction ", prediction);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Prediction");
+        builder.setMessage(prediction);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    private void resetData(){
+        totalTime = 0;
+        numberOfBackspace = 0;
+        commentLength = 0;
+        keyboardTouchCount = 0;
+        contentViewTouchCount = 0;
+        touchCount = 0;
+        erasedTextLength = 0;
+    }
+
+    public class getWeather extends AsyncTask<String, String, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected String doInBackground(String...params) {
+            String url = "http://api.openweathermap.org/data/2.5/weather?lat=" + params[0] + "&lon=" + params[1] + "&appid=e405d86b492ae66fd00edb49242fe464";
+
+
+            HTTPHandler sh = new HTTPHandler();
+            String jsonStr = null;
+            try {
+                jsonStr = sh.MakeServiceCall(url);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            if(jsonStr != null){
+                try{
+                    JSONObject jsonObject = new JSONObject(jsonStr);
+                    JSONArray weatherArray = jsonObject.getJSONArray("weather");
+                    JSONObject w = weatherArray.getJSONObject(0);
+                    weather = w.getString("main");
+                    return weather;
+
+                }catch (final JSONException e){
+                    Log.e(TAG, "Json parsing error: " + e.getMessage());
+                    return e.getMessage();
+
+                }
+            }else {
+                Log.e(TAG, "Couldn't get json from server.");
+                return "Couldn't get json from server.";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
         }
     }
 

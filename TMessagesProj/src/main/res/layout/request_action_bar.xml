@@ -4,40 +4,50 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
     android:background="@color/common_signin_btn_dark_text_default"
-        android:paddingTop="2dp"
+        android:paddingTop="10dp"
         android:paddingBottom="2dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-    android:weightSum="4"
+    android:weightSum="5"
     android:id="@+id/request_action_bar">
     <!--Back-->
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/audioload1"
-        android:id="@+id/ib_action_back"/>
-        <!--Nudge-->
+        android:src="@drawable/ic_context_back"
+        android:id="@+id/ib_context_back"
+        android:background="@drawable/transparent"
+        android:layout_weight="1" />
+        <!--Home-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/audioload1"
-            android:id="@+id/ib_action_nudge"/>
-        <!--Request Photo-->
+            android:src="@drawable/ic_context_home"
+            android:id="@+id/ib_context_home"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
+        <!--Work-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/audioload1"
-            android:id="@+id/ib_action_photo"/>
-        <!--Request video-->
+            android:src="@drawable/ic_context_work"
+            android:id="@+id/ib_context_work"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
+        <!--Entertainment-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/audioload1"
-            android:id="@+id/ib_action_video"/>
-        <!--Request Location-->
+            android:src="@drawable/ic_context_entertainment"
+            android:id="@+id/ib_context_entertainment"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
+        <!--Commute-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/audioload1"
-            android:id="@+id/ib_action_location"/>
+            android:src="@drawable/ic_context_commute"
+            android:id="@+id/ib_context_commute"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
     </LinearLayout>

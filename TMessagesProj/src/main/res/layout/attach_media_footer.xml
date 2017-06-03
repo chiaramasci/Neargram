@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal"
-        android:paddingTop="2dp"
+        android:paddingTop="20dp"
         android:paddingBottom="2dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -12,43 +12,59 @@
         <!--Do action-->
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/audioload1"
-            android:id="@+id/ib_action"/>
+            android:layout_height="25dp"
+            android:src="@drawable/ic_context_home"
+            android:scaleType="fitCenter"
+            android:id="@+id/ib_context"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"
+            android:tag="home"/>
         <!--Take a photo-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_photo"
-            android:id="@+id/ib_take_photo"/>
+            android:id="@+id/ib_take_photo"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
         <!--Choose from Gallery-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_gallery"
-            android:id="@+id/ib_gallery"/>
+            android:id="@+id/ib_gallery"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
         <!--Music-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_music"
-            android:id="@+id/ib_music"/>
+            android:id="@+id/ib_music"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
         <!--Video-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_video"
-            android:id="@+id/ib_video"/>
+            android:id="@+id/ib_video"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
         <!--File-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_ab_doc"
-            android:id="@+id/ib_file"/>
+            android:id="@+id/ib_file"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
         <!--Location-->
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_attach_location"
-            android:id="@+id/ib_location"/>
+            android:id="@+id/ib_location"
+            android:background="@drawable/transparent"
+            android:layout_weight="1"/>
     </LinearLayout>

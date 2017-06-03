@@ -564,11 +564,11 @@ public class ChatMediaCell extends ChatBaseCell implements MediaController.FileD
                 }
             } else {
                 if (AndroidUtilities.isTablet()) {
-                    photoWidth = (int) (AndroidUtilities.getMinTabletSide() * 0.7f);
+                    photoWidth = (int) (AndroidUtilities.getMinTabletSide() * 0.9f);
                 } else {
-                    photoWidth = (int) (Math.min(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y) * 0.7f);
+                    photoWidth = (int) (Math.min(AndroidUtilities.displaySize.x, AndroidUtilities.displaySize.y) * 0.9f);
                 }
-                photoHeight = photoWidth + AndroidUtilities.dp(100);
+                photoHeight = photoWidth + AndroidUtilities.dp(400);
 
                 if (photoWidth > AndroidUtilities.getPhotoSize()) {
                     photoWidth = AndroidUtilities.getPhotoSize();
@@ -581,7 +581,7 @@ public class ChatMediaCell extends ChatBaseCell implements MediaController.FileD
                     photoImage.setNeedsQualityThumb(false);
                     photoImage.setShouldGenerateQualityThumb(false);
                     photoImage.setParentMessageObject(null);
-                    currentPhotoObjectThumb = FileLoader.getClosestPhotoSizeWithSize(messageObject.photoThumbs, 80);
+                    currentPhotoObjectThumb = FileLoader.getClosestPhotoSizeWithSize(messageObject.photoThumbs, 100);
                 } else if (messageObject.type == 3) {
                     photoImage.setNeedsQualityThumb(true);
                     photoImage.setShouldGenerateQualityThumb(true);

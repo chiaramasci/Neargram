@@ -82,10 +82,15 @@ public class ChatBaseCell extends BaseCell {
     private static Drawable halfCheckDrawableWhite;
     private static Drawable clockDrawableWhite;
 
+    private static Drawable posFeeling;
+    private static Drawable negFeeling;
+    private static Drawable neuFeeling;
+
     protected int backgroundWidth = 100;
 
     protected int layoutWidth;
     protected int layoutHeight;
+
 
     private ImageReceiver avatarImage;
     private AvatarDrawable avatarDrawable;
@@ -128,18 +133,18 @@ public class ChatBaseCell extends BaseCell {
     public ChatBaseCell(Context context) {
         super(context);
         if (backgroundDrawableIn == null) {
-            backgroundDrawableIn = getResources().getDrawable(R.drawable.msg_in_photo);
-            backgroundDrawableInSelected = getResources().getDrawable(R.drawable.msg_in_photo_selected);
-            backgroundMediaDrawableIn = getResources().getDrawable(R.drawable.msg_in_photo);
-            backgroundMediaDrawableInSelected = getResources().getDrawable(R.drawable.msg_in_photo_selected);
-            /*backgroundDrawableIn = getResources().getDrawable(R.drawable.msg_in);
+            backgroundDrawableIn = getResources().getDrawable(R.drawable.msg_in);
+            backgroundDrawableInSelected = getResources().getDrawable(R.drawable.msg_in);
+            backgroundMediaDrawableIn = getResources().getDrawable(R.drawable.msg_in);
+            backgroundMediaDrawableInSelected = getResources().getDrawable(R.drawable.msg_in);
+            backgroundDrawableIn = getResources().getDrawable(R.drawable.msg_in);
             backgroundDrawableInSelected = getResources().getDrawable(R.drawable.msg_in_selected);
             backgroundDrawableOut = getResources().getDrawable(R.drawable.msg_out);
             backgroundDrawableOutSelected = getResources().getDrawable(R.drawable.msg_out_selected);
             backgroundMediaDrawableIn = getResources().getDrawable(R.drawable.msg_in_photo);
             backgroundMediaDrawableInSelected = getResources().getDrawable(R.drawable.msg_in_photo_selected);
             backgroundMediaDrawableOut = getResources().getDrawable(R.drawable.msg_out_photo);
-            backgroundMediaDrawableOutSelected = getResources().getDrawable(R.drawable.msg_out_photo_selected);*/
+            backgroundMediaDrawableOutSelected = getResources().getDrawable(R.drawable.msg_out_photo_selected);
             checkDrawable = getResources().getDrawable(R.drawable.msg_check);
             halfCheckDrawable = getResources().getDrawable(R.drawable.msg_halfcheck);
             clockDrawable = getResources().getDrawable(R.drawable.msg_clock);
@@ -151,19 +156,23 @@ public class ChatBaseCell extends BaseCell {
             broadcastDrawable = getResources().getDrawable(R.drawable.broadcast3);
             broadcastMediaDrawable = getResources().getDrawable(R.drawable.broadcast4);
 
-            backgroundDrawableOutWhite = getResources().getDrawable(R.drawable.msg_out_photo_white);
-            backgroundDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.msg_out_photo_white_selected);
-            backgroundMediaDrawableOutWhite = getResources().getDrawable(R.drawable.msg_out_photo_white);
-            backgroundMediaDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.msg_out_photo_white_selected);
+            backgroundDrawableOutWhite = getResources().getDrawable(R.drawable.mess_in);
+            backgroundDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.mess_in);
+            backgroundMediaDrawableOutWhite = getResources().getDrawable(R.drawable.mess_in);
+            backgroundMediaDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.mess_in);
 
-            /*backgroundDrawableOutWhite = getResources().getDrawable(R.drawable.msg_out_white);
+            backgroundDrawableOutWhite = getResources().getDrawable(R.drawable.msg_out_white);
             backgroundDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.msg_out_white_selected);
             backgroundMediaDrawableOutWhite = getResources().getDrawable(R.drawable.msg_out_photo_white);
-            backgroundMediaDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.msg_out_photo_white_selected);*/
+            backgroundMediaDrawableOutWhiteSelected = getResources().getDrawable(R.drawable.msg_out_photo_white_selected);
 
             checkDrawableWhite = getResources().getDrawable(R.drawable.msg_check_white);
             halfCheckDrawableWhite = getResources().getDrawable(R.drawable.msg_halfcheck_white);
             clockDrawableWhite = getResources().getDrawable(R.drawable.msg_clock_white);
+
+            posFeeling = getResources().getDrawable(R.drawable.msg_check);
+            negFeeling = getResources().getDrawable(R.drawable.msg_check_w);
+            neuFeeling = getResources().getDrawable(R.drawable.msg_clock);
 
             timePaintIn = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             timePaintIn.setTextSize(AndroidUtilities.dp(12));
@@ -192,10 +201,10 @@ public class ChatBaseCell extends BaseCell {
         int tColor = AndroidUtilities.getIntColor("themeColor");
         int lColor = AndroidUtilities.getIntDarkerColor("themeColor",-0x80);
         int dColor = AndroidUtilities.getIntDarkerColor("themeColor",0x15);
-        backgroundDrawableOutWhite.setColorFilter(AndroidUtilities.getIntDef("chatRBubbleColor", lColor), PorterDuff.Mode.MULTIPLY);
-        backgroundMediaDrawableOutWhite.setColorFilter(AndroidUtilities.getIntDef("chatRBubbleColor", lColor), PorterDuff.Mode.MULTIPLY);
-        backgroundDrawableIn.setColorFilter(AndroidUtilities.getIntDef("chatLBubbleColor",0xffffffff), PorterDuff.Mode.MULTIPLY);
-        backgroundMediaDrawableIn.setColorFilter(AndroidUtilities.getIntDef("chatLBubbleColor",0xffffffff), PorterDuff.Mode.MULTIPLY);
+        //backgroundDrawableOutWhite.setColorFilter(AndroidUtilities.getIntDef("chatRBubbleColor", lColor), PorterDuff.Mode.MULTIPLY);
+        //backgroundMediaDrawableOutWhite.setColorFilter(AndroidUtilities.getIntDef("chatRBubbleColor", lColor), PorterDuff.Mode.MULTIPLY);
+        //backgroundDrawableIn.setColorFilter(AndroidUtilities.getIntDef("chatLBubbleColor",0xffffffff), PorterDuff.Mode.MULTIPLY);
+        //backgroundMediaDrawableIn.setColorFilter(AndroidUtilities.getIntDef("chatLBubbleColor",0xffffffff), PorterDuff.Mode.MULTIPLY);
 
         int checksColor = AndroidUtilities.getIntDef("chatChecksColor", tColor);
         checkDrawableWhite.setColorFilter(checksColor, PorterDuff.Mode.MULTIPLY);
@@ -206,6 +215,10 @@ public class ChatBaseCell extends BaseCell {
         timePaintOut.setTextSize(AndroidUtilities.dp(AndroidUtilities.getIntDef("chatTimeSize",12)));
         timePaintIn.setColor(AndroidUtilities.getIntDef("chatLTimeColor",0xffa1aab3));
         timePaintIn.setTextSize(AndroidUtilities.dp(AndroidUtilities.getIntDef("chatTimeSize",12)));
+
+        posFeeling.setColorFilter(checksColor,PorterDuff.Mode.MULTIPLY);
+        negFeeling.setColorFilter(checksColor,PorterDuff.Mode.MULTIPLY);
+        neuFeeling.setColorFilter(checksColor,PorterDuff.Mode.MULTIPLY);
     }
 
     @Override
@@ -493,17 +506,18 @@ public class ChatBaseCell extends BaseCell {
         if (currentMessageObject.isOut()) {
             if (isPressed() && isCheckPressed || !isCheckPressed && isPressed) {
                 if (!media) {
-                    currentBackgroundDrawable = backgroundDrawableOutWhiteSelected;//backgroundDrawableOutSelected;
+                    currentBackgroundDrawable = backgroundDrawableOutWhiteSelected;
                 } else {
-                    currentBackgroundDrawable = backgroundMediaDrawableOutWhiteSelected;//backgroundMediaDrawableOutSelected;
+                    currentBackgroundDrawable = backgroundMediaDrawableOutSelected;
                 }
             } else {
                 if (!media) {
-                    currentBackgroundDrawable = backgroundDrawableOutWhite;//backgroundDrawableOut;
+                    currentBackgroundDrawable = backgroundDrawableOutWhite;
                 } else {
-                    currentBackgroundDrawable = backgroundMediaDrawableOutWhite;//backgroundMediaDrawableOut;
+                    currentBackgroundDrawable = backgroundMediaDrawableOut;
                 }
             }
+            //setDrawableBounds(currentBackgroundDrawable,AndroidUtilities.dp(0),AndroidUtilities.dp(0),AndroidUtilities.dp(100),layoutHeight - AndroidUtilities.dp(2));
             setDrawableBounds(currentBackgroundDrawable, layoutWidth - backgroundWidth - (!media ? 0 : AndroidUtilities.dp(9)), AndroidUtilities.dp(1), backgroundWidth, layoutHeight - AndroidUtilities.dp(2));
         } else {
             if (isPressed() && isCheckPressed || !isCheckPressed && isPressed) {
@@ -576,6 +590,7 @@ public class ChatBaseCell extends BaseCell {
                 boolean drawCheck2 = false;
                 boolean drawClock = false;
                 boolean drawError = false;
+                boolean drawFeel = false;
                 boolean isBroadcast = (int)(currentMessageObject.getDialogId() >> 32) == 1;
 
                 if (currentMessageObject.isSending()) {
@@ -583,21 +598,26 @@ public class ChatBaseCell extends BaseCell {
                     drawCheck2 = false;
                     drawClock = true;
                     drawError = false;
+                    drawFeel = false;
                 } else if (currentMessageObject.isSendError()) {
                     drawCheck1 = false;
                     drawCheck2 = false;
                     drawClock = false;
                     drawError = true;
+                    drawFeel = false;
                 } else if (currentMessageObject.isSent()) {
                     if (!currentMessageObject.isUnread()) {
                         drawCheck1 = true;
                         drawCheck2 = true;
+                        drawFeel = true;
                     } else {
                         drawCheck1 = false;
                         drawCheck2 = true;
+                        drawFeel = true;
                     }
                     drawClock = false;
                     drawError = false;
+                    drawFeel = true;
                 }
 
                 if (drawClock) {
@@ -608,6 +628,14 @@ public class ChatBaseCell extends BaseCell {
                     } else {
                         setDrawableBounds(clockMediaDrawable, layoutWidth - AndroidUtilities.dp(22.0f) - clockMediaDrawable.getIntrinsicWidth(), layoutHeight - AndroidUtilities.dp(13.0f) - clockMediaDrawable.getIntrinsicHeight());
                         clockMediaDrawable.draw(canvas);
+                    }
+                }
+
+                if(drawFeel){
+                    if (!media) {
+                        /*clockDrawable = clockDrawableWhite;
+                        setDrawableBounds(clockDrawable, AndroidUtilities.dp(18.5f), layoutHeight - AndroidUtilities.dp(8.5f) - clockDrawable.getIntrinsicHeight());
+                        clockDrawable.draw(canvas);*/
                     }
                 }
                 if (isBroadcast) {

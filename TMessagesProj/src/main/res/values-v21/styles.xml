@@ -20,6 +20,8 @@
         <item name="android:colorPrimary">#54759e</item>-->
         <item name="android:colorPrimaryDark">@color/primary_dark</item>
         <item name="android:colorPrimary">@color/header</item>
+        <item name="android:colorAccent">@color/header</item>
+        <item name="android:statusBarColor">@color/header</item>
     </style>
 
     <style name="Theme.TMessages" parent="Theme.AppCompat.Light.NoActionBar">

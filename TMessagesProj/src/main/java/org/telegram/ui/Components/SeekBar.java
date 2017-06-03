@@ -47,8 +47,8 @@ public class SeekBar {
             thumbDrawablePressed1 = context.getResources().getDrawable(R.drawable.player1_pressed);
             thumbDrawable2 = context.getResources().getDrawable(R.drawable.player2);
             thumbDrawablePressed2 = context.getResources().getDrawable(R.drawable.player2_pressed);
-            innerPaint1.setColor(0xffb4e396);
-            outerPaint1.setColor(0xff6ac453);
+            innerPaint1.setColor(0xffffffff);
+            outerPaint1.setColor(0xffdddddd);
             innerPaint2.setColor(0xffd9e2eb);
             outerPaint2.setColor(0xff86c5f8);
             thumbWidth = thumbDrawable1.getIntrinsicWidth();

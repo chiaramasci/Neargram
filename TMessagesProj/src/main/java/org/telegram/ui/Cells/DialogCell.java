@@ -124,6 +124,8 @@ public class DialogCell extends BaseCell {
 
     private int avatarTop = AndroidUtilities.dp(10);
 
+    /*private boolean drawPos;*/
+
     private void init() {
         if (namePaint == null) {
             namePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
@@ -410,28 +412,34 @@ public class DialogCell extends BaseCell {
                     drawCheck2 = false;
                     drawClock = true;
                     drawError = false;
+                   // drawPos = false;
                 } else if (message.isSendError()) {
                     drawCheck1 = false;
                     drawCheck2 = false;
                     drawClock = false;
                     drawError = true;
                     drawCount = false;
+                   // drawPos = false;
                 } else if (message.isSent()) {
                     if (!message.isUnread()) {
                         drawCheck1 = true;
                         drawCheck2 = true;
+                      //  drawPos = true;
                     } else {
                         drawCheck1 = false;
                         drawCheck2 = true;
+                       // drawPos = true;
                     }
                     drawClock = false;
                     drawError = false;
+                   // drawPos = true;
                 }
             } else {
                 drawCheck1 = false;
                 drawCheck2 = false;
                 drawClock = false;
                 drawError = false;
+                //drawPos = false;
             }
         }
 
@@ -513,7 +521,16 @@ public class DialogCell extends BaseCell {
                     nameLeft += w;
                 }
             }
-        }
+        } /*else if(drawPos){
+            int w = clockDrawable.getIntrinsicWidth() + AndroidUtilities.dp(5);
+            nameWidth -= w;
+            if (!LocaleController.isRTL) {
+                checkDrawLeft = timeLeft - w;
+            } else {
+                checkDrawLeft = timeLeft + timeWidth + AndroidUtilities.dp(5);
+                nameLeft += w;
+            }
+        }*/
 
         if (dialogMuted) {
             int w = AndroidUtilities.dp(6) + muteDrawable.getIntrinsicWidth();
@@ -817,6 +834,11 @@ public class DialogCell extends BaseCell {
                 checkDrawable.draw(canvas);
             }
         }
+
+        /*if(drawPos){
+            setDrawableBounds(clockDrawable, checkDrawLeft, checkDrawTop);
+            clockDrawable.draw(canvas);
+        }*/
 
         if (dialogMuted) {
             setDrawableBounds(muteDrawable, nameMuteLeft, AndroidUtilities.dp(16.5f));

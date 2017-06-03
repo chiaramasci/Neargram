@@ -61,27 +61,18 @@ public class IntroActivity extends Activity {
 
         if (LocaleController.isRTL) {
             icons = new int[] {
-                    R.drawable.intro7,
-                    R.drawable.intro6,
-                    R.drawable.intro5,
                     R.drawable.intro4,
-                    R.drawable.intro3,
-                    R.drawable.intro2,
-                    R.drawable.intro1
+                    R.drawable.intro03,
+                    R.drawable.intro02,
+                    R.drawable.intro01
             };
             titles = new int[] {
-                    R.string.Page7Title,
-                    R.string.Page6Title,
-                    R.string.Page5Title,
                     R.string.Page4Title,
                     R.string.Page3Title,
                     R.string.Page2Title,
-                    R.string.Page1Title
+                    R.string.Page1Title,
             };
             messages = new int[] {
-                    R.string.Page7Message,
-                    R.string.Page6Message,
-                    R.string.Page5Message,
                     R.string.Page4Message,
                     R.string.Page3Message,
                     R.string.Page2Message,
@@ -89,31 +80,22 @@ public class IntroActivity extends Activity {
             };
         } else {
             icons = new int[] {
-                    R.drawable.intro1,
-                    R.drawable.intro2,
-                    R.drawable.intro3,
-                    R.drawable.intro4,
-                    R.drawable.intro5,
-                    R.drawable.intro6,
-                    R.drawable.intro7
+                    R.drawable.intro01,
+                    R.drawable.intro02,
+                    R.drawable.intro03,
+                    R.drawable.intro04,
             };
             titles = new int[] {
                     R.string.Page1Title,
                     R.string.Page2Title,
                     R.string.Page3Title,
                     R.string.Page4Title,
-                    R.string.Page5Title,
-                    R.string.Page6Title,
-                    R.string.Page7Title
             };
             messages = new int[] {
                     R.string.Page1Message,
                     R.string.Page2Message,
                     R.string.Page3Message,
-                    R.string.Page4Message,
-                    R.string.Page5Message,
-                    R.string.Page6Message,
-                    R.string.Page7Message
+                    R.string.Page4Message
             };
         }
         viewPager = (ViewPager)findViewById(R.id.intro_view_pager);
@@ -230,8 +212,8 @@ public class IntroActivity extends Activity {
         super.onResume();
         if (justCreated) {
             if (LocaleController.isRTL) {
-                viewPager.setCurrentItem(6);
-                lastPage = 6;
+                viewPager.setCurrentItem(4);
+                lastPage = 4;
             } else {
                 viewPager.setCurrentItem(0);
                 lastPage = 0;
@@ -245,7 +227,7 @@ public class IntroActivity extends Activity {
     private class IntroAdapter extends PagerAdapter {
         @Override
         public int getCount() {
-            return 7;
+            return 4;
         }
 
         @Override
@@ -273,8 +255,8 @@ public class IntroActivity extends Activity {
             for (int a = 0; a < count; a++) {
                 View child = bottomPages.getChildAt(a);
                 if (a == position) {
-                    //child.setBackgroundColor(0xff2ca5e0);
-                    child.setBackgroundColor(0xff58BCD5);
+                    child.setBackgroundColor(0xff2ca5e0);
+                    //child.setBackgroundColor(getColor(R.color.primary_light));
                 } else {
                     child.setBackgroundColor(0xffbbbbbb);
                 }

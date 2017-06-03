@@ -138,7 +138,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
 
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTheme(R.style.Theme_TMessages);
+        setTheme(R.style.Theme_Near);
         getWindow().setBackgroundDrawableResource(R.drawable.transparent);
 
         super.onCreate(savedInstanceState);
@@ -448,7 +448,6 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         if(extras != null){
-            Toast.makeText(this,"not null",Toast.LENGTH_SHORT).show();
             final int chatId = extras.getInt("chat_id", 0);
             final int userId = extras.getInt("user_id", 0);
             final int encId = extras.getInt("enc_id", 0);
@@ -456,7 +455,7 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
             scrollToTopOnResume = extras.getBoolean("scrollToTopOnResume", false);
             isChatOpen = extras.getBoolean("open",true);
 
-            Toast.makeText(this,Boolean.toString(isChatOpen),Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this,Boolean.toString(isChatOpen),Toast.LENGTH_SHORT).show();
 
             if(isChatOpen){
                 Bundle args = new Bundle();
@@ -1224,7 +1223,6 @@ public class LaunchActivity extends Activity implements ActionBarLayout.ActionBa
         /**SAINT GRAIL FOR CHAT HEAD PT.2*/
         Bundle extras = getIntent().getExtras();
         if(extras != null){ //if extras are not null and !isChatOpen then close
-            Toast.makeText(getApplicationContext(),"resume extras not null",Toast.LENGTH_SHORT).show();
 
             if(!isChatOpen){
                 isChatOpen = true;

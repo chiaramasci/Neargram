@@ -116,7 +116,7 @@ View.OnClickListener {
 				if(listener != null) {
 					listener.colorChanged(color);
 				}
-				history.selectColor(color);
+				/*history.selectColor(color);*/
 				dismiss();
 			}
 		});

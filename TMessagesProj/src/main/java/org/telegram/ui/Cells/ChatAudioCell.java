@@ -73,14 +73,23 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
         avatarDrawable = new AvatarDrawable();
 
         if (timePaint == null) {
-            statesDrawable[0][0] = getResources().getDrawable(R.drawable.play1);
+            /*statesDrawable[0][0] = getResources().getDrawable(R.drawable.play1);
             statesDrawable[0][1] = getResources().getDrawable(R.drawable.play1_pressed);
             statesDrawable[1][0] = getResources().getDrawable(R.drawable.pause1);
             statesDrawable[1][1] = getResources().getDrawable(R.drawable.pause1_pressed);
             statesDrawable[2][0] = getResources().getDrawable(R.drawable.audioload1);
             statesDrawable[2][1] = getResources().getDrawable(R.drawable.audioload1_pressed);
             statesDrawable[3][0] = getResources().getDrawable(R.drawable.audiocancel1);
-            statesDrawable[3][1] = getResources().getDrawable(R.drawable.audiocancel1_pressed);
+            statesDrawable[3][1] = getResources().getDrawable(R.drawable.audiocancel1_pressed);*/
+
+            statesDrawable[0][0] = getResources().getDrawable(R.drawable.play2);
+            statesDrawable[0][1] = getResources().getDrawable(R.drawable.play2_pressed);
+            statesDrawable[1][0] = getResources().getDrawable(R.drawable.pause2);
+            statesDrawable[1][1] = getResources().getDrawable(R.drawable.pause2_pressed);
+            statesDrawable[2][0] = getResources().getDrawable(R.drawable.audioload2);
+            statesDrawable[2][1] = getResources().getDrawable(R.drawable.audioload2_pressed);
+            statesDrawable[3][0] = getResources().getDrawable(R.drawable.audiocancel2);
+            statesDrawable[3][1] = getResources().getDrawable(R.drawable.audiocancel2_pressed);
 
             statesDrawable[4][0] = getResources().getDrawable(R.drawable.play2);
             statesDrawable[4][1] = getResources().getDrawable(R.drawable.play2_pressed);
@@ -291,7 +300,7 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int width = MeasureSpec.getSize(widthMeasureSpec);
-        setMeasuredDimension(width, AndroidUtilities.dp(68));
+        setMeasuredDimension(width, AndroidUtilities.dp(50));
         if (isChat) {
             backgroundWidth = Math.min(width - AndroidUtilities.dp(102), AndroidUtilities.dp(300));
         } else {
@@ -324,21 +333,27 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
             }
         }
         int diff = 0;
-        if (needAvatarImage) {
+        //set space for avatar image in the audio bubble
+        /*if (needAvatarImage) {
             avatarImage.setImageCoords(x, AndroidUtilities.dp(9), AndroidUtilities.dp(50), AndroidUtilities.dp(50));
         } else {
             diff = AndroidUtilities.dp(56);
             seekBarX -= diff;
             buttonX -= diff;
             timeX -= diff;
-        }
+        }*/
+
+        diff = AndroidUtilities.dp(70);
+        seekBarX -= diff;
+        buttonX -= diff;
+        timeX -= diff;
 
         seekBar.width = backgroundWidth - AndroidUtilities.dp(112) + diff;
         seekBar.height = AndroidUtilities.dp(30);
         progressView.width = backgroundWidth - AndroidUtilities.dp(136) + diff;
         progressView.height = AndroidUtilities.dp(30);
-        seekBarY = AndroidUtilities.dp(13);
-        buttonY = AndroidUtilities.dp(10);
+        seekBarY = AndroidUtilities.dp(10);
+        buttonY = AndroidUtilities.dp(7);
 
         updateProgress();
     }
@@ -348,11 +363,12 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
         TLRPC.User newUser = MessagesController.getInstance().getUser(currentMessageObject.messageOwner.media.audio.user_id);
         TLRPC.FileLocation newPhoto = null;
 
-        if (avatarImage != null && newUser != null && newUser.photo != null) {
+        /*if (avatarImage != null && newUser != null && newUser.photo != null) {
             newPhoto = newUser.photo.photo_small;
         }
 
-        return currentPhoto == null && newPhoto != null || currentPhoto != null && newPhoto == null || currentPhoto != null && newPhoto != null && (currentPhoto.local_id != newPhoto.local_id || currentPhoto.volume_id != newPhoto.volume_id) || super.isUserDataChanged();
+        return currentPhoto == null && newPhoto != null || currentPhoto != null && newPhoto == null || currentPhoto != null && newPhoto != null && (currentPhoto.local_id != newPhoto.local_id || currentPhoto.volume_id != newPhoto.volume_id) || super.isUserDataChanged();*/
+        return false;
     }
 
     @Override
@@ -365,7 +381,8 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
             needAvatarImage = !(messageObject.messageOwner.to_id != null && messageObject.messageOwner.to_id.chat_id != 0 && !messageObject.isOut() && messageObject.messageOwner.media.audio.user_id == messageObject.messageOwner.from_id);
             audioUser = MessagesController.getInstance().getUser(uid);
 
-            if (needAvatarImage) {
+            //to insert avatar image in audio cell
+            /*if (needAvatarImage) {
                 if (audioUser != null) {
                     if (audioUser.photo != null) {
                         currentPhoto = audioUser.photo.photo_small;
@@ -378,11 +395,12 @@ public class ChatAudioCell extends ChatBaseCell implements SeekBar.SeekBarDelega
                     currentPhoto = null;
                 }
                 avatarImage.setImage(currentPhoto, "50_50", avatarDrawable, false);
-            }
+            }*/
 
             if (messageObject.isOut()) {
                 seekBar.type = 0;
-                progressView.setProgressColors(0xffb4e396, 0xff6ac453);
+                //progressView.setProgressColors(0xffb4e396, 0xff6ac453);
+                progressView.setProgressColors(0xffd9e2eb, 0xff86c5f8);
             } else {
                 seekBar.type = 1;
                 progressView.setProgressColors(0xffd9e2eb, 0xff86c5f8);

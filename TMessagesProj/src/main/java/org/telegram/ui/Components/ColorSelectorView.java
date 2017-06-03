@@ -61,7 +61,7 @@ public class ColorSelectorView extends LinearLayout {
 	}
 	
 	public void setDialog(Dialog d) {
-		hexSelector.setDialog(d); 
+		/*hexSelector.setDialog(d); */
 	}
 
 	private void setColor(int color, View sender) {
@@ -87,7 +87,7 @@ public class ColorSelectorView extends LinearLayout {
 		View contentView = inflater.inflate(R.layout.color_colorselectview,
 				null);
 
-		addView(contentView, new LayoutParams(LayoutParams.FILL_PARENT,
+		/*addView(contentView, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
 
 		hsvSelector = new HsvSelectorView(getContext());
@@ -144,7 +144,7 @@ public class ColorSelectorView extends LinearLayout {
 		.setContent(factory);
 		tabs.addTab(hsvTab);
 		tabs.addTab(rgbTab);
-		tabs.addTab(hexTab);
+		tabs.addTab(hexTab);*/
 	}
 
 	private static View createTabView(final Context context, final String text) {
@@ -191,11 +191,11 @@ public class ColorSelectorView extends LinearLayout {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		if(HSV_TAG.equals(tabs.getCurrentTabTag()))
+		/*if(HSV_TAG.equals(tabs.getCurrentTabTag()))
 		{
 			maxHeight = getMeasuredHeight();
 			maxWidth = getMeasuredWidth();
-		}
+		}*/
 		setMeasuredDimension(maxWidth, maxHeight);
 	}
 }

@@ -865,7 +865,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
 
             ActionBarMenu menu = actionBar.createMenu();
 
-            MemoriesItem = menu.addItem(0,R.drawable.ab_progress);
+            MemoriesItem = menu.addItem(0,R.drawable.ic_memories);
             headerItem = menu.addItem(1, R.drawable.ic_ab_other);
 
             // TODO(10) FIX AS FOR GROUPS IT DOESN'T WORK :(
@@ -961,7 +961,8 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             fragmentView = new SizeNotifierRelativeLayout(getParentActivity());
             final SizeNotifierRelativeLayout contentView = (SizeNotifierRelativeLayout) fragmentView;
 
-            contentView.setBackgroundImage(ApplicationLoader.getCachedWallpaper());
+            contentView.setBackgroundColor(0xffeeeeee);
+            //contentView.setBackgroundImage(ApplicationLoader.getCachedWallpaper());
             //contentView.setBackgroundColor(0xffff00ff);
             isCustomTheme = ApplicationLoader.isCustomTheme();
 
@@ -1330,7 +1331,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             actionRequestBar = chatActivityEnterView.findViewById(R.id.request_action_bar);
 
             //for attachments
-            ImageButton attachTakePictureIB, attachGalleryIB, attachFileIB, attachVideoIB, attachMusicIB, attachLocationIB, requestAction;
+            final ImageButton attachTakePictureIB, attachGalleryIB, attachFileIB, attachVideoIB, attachMusicIB, attachLocationIB, requestAction;
             attachTakePictureIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_take_photo);
             attachGalleryIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_gallery);
             attachFileIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_file);
@@ -1339,12 +1340,20 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
             attachLocationIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_location);
 
             //for actions
-            requestAction = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action);
-            ImageButton backActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action_back);
-            ImageButton nudgeActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action_nudge);
-            ImageButton photoActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action_photo);
-            ImageButton videoActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action_video);
-            ImageButton locationActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_action_location);
+            requestAction = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context);
+            ImageButton backActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context_back);
+            ImageButton nudgeActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context_home);
+            ImageButton photoActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context_work);
+            ImageButton videoActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context_entertainment);
+            ImageButton locationActionIB = (ImageButton) chatActivityEnterView.findViewById(R.id.ib_context_commute);
+
+            SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+            Integer imgActualContext = preferences.getInt("imgActualContext",0);
+            if(imgActualContext == 0){
+                requestAction.setImageResource(R.drawable.ic_context_home);
+            }else{
+                requestAction.setImageResource(imgActualContext);
+            }
 
 
             View.OnClickListener attachListener = new View.OnClickListener() {
@@ -1499,7 +1508,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 @Override
                 public void onClick(View v) {
                     switch (v.getId()){
-                        case R.id.ib_action:
+                        case R.id.ib_context:
                             if(actionRequestBar.getVisibility() == View.GONE){
                                 actionRequestBar.setVisibility(View.VISIBLE);
                             }else{
@@ -1507,7 +1516,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                             }
                             break;
 
-                        case R.id.ib_action_back:
+                        case R.id.ib_context_back:
                             if(actionRequestBar.getVisibility() == View.GONE){
                                 actionRequestBar.setVisibility(View.VISIBLE);
                             }else{
@@ -1515,20 +1524,48 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                             }
                             break;
 
-                        case R.id.ib_action_nudge:
-                            Toast.makeText(getParentActivity(),"nudge", Toast.LENGTH_SHORT).show();
+                        case R.id.ib_context_home:
+                            Toast.makeText(getParentActivity(),"home", Toast.LENGTH_SHORT).show();
+                            requestAction.setImageResource(R.drawable.ic_context_home);
+                            requestAction.setTag("home");
+                            if(actionRequestBar.getVisibility() == View.GONE){
+                                actionRequestBar.setVisibility(View.VISIBLE);
+                            }else{
+                                actionRequestBar.setVisibility(View.GONE);
+                            }
                             break;
 
-                        case R.id.ib_action_photo:
-                            Toast.makeText(getParentActivity(),"request photo", Toast.LENGTH_SHORT).show();
+                        case R.id.ib_context_work:
+                            Toast.makeText(getParentActivity(),"work", Toast.LENGTH_SHORT).show();
+                            requestAction.setImageResource(R.drawable.ic_context_work);
+                            requestAction.setTag("work");
+                            if(actionRequestBar.getVisibility() == View.GONE){
+                                actionRequestBar.setVisibility(View.VISIBLE);
+                            }else{
+                                actionRequestBar.setVisibility(View.GONE);
+                            }
                             break;
 
-                        case R.id.ib_action_video:
-                            Toast.makeText(getParentActivity(),"request video", Toast.LENGTH_SHORT).show();
+                        case R.id.ib_context_entertainment:
+                            Toast.makeText(getParentActivity(),"entertainment", Toast.LENGTH_SHORT).show();
+                            requestAction.setImageResource(R.drawable.ic_context_entertainment);
+                            requestAction.setTag("entertainment");
+                            if(actionRequestBar.getVisibility() == View.GONE){
+                                actionRequestBar.setVisibility(View.VISIBLE);
+                            }else{
+                                actionRequestBar.setVisibility(View.GONE);
+                            }
                             break;
 
-                        case R.id.ib_action_location:
-                            Toast.makeText(getParentActivity(),"request location", Toast.LENGTH_SHORT).show();
+                        case R.id.ib_context_commute:
+                            Toast.makeText(getParentActivity(),"commute", Toast.LENGTH_SHORT).show();
+                            requestAction.setImageResource(R.drawable.ic_context_commute);
+                            requestAction.setTag("commute");
+                            if(actionRequestBar.getVisibility() == View.GONE){
+                                actionRequestBar.setVisibility(View.VISIBLE);
+                            }else{
+                                actionRequestBar.setVisibility(View.GONE);
+                            }
                             break;
 
                     }

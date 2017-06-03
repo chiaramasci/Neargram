@@ -868,9 +868,8 @@ public class MediaActivity extends BaseFragment implements NotificationCenter.No
                 emptyImageView.setImageResource(R.drawable.tip1);
 
                 //img buttons change
-                imgSharedMediaImageButton.setImageResource(R.drawable.addcontact_blue);
-                filesSharedMediaImageButton.setImageResource(R.drawable.audioload1);
-                reactedSharedMediaImageButton.setImageResource(R.drawable.audioload1);
+                imgSharedMediaImageButton.setImageResource(R.drawable.ic_attach_photo);
+                filesSharedMediaImageButton.setImageResource(R.drawable.ic_ab_doc);
 
                 if (sharedMediaData[selectedMode].loading && sharedMediaData[selectedMode].messages.isEmpty()) {
                     progressView.setVisibility(View.VISIBLE);
@@ -891,9 +890,8 @@ public class MediaActivity extends BaseFragment implements NotificationCenter.No
                 searchItem.setVisibility(!sharedMediaData[1].messages.isEmpty() ? View.VISIBLE : View.GONE);
 
                 //img buttons change
-                imgSharedMediaImageButton.setImageResource(R.drawable.audioload1);
-                filesSharedMediaImageButton.setImageResource(R.drawable.addcontact_blue);
-                reactedSharedMediaImageButton.setImageResource(R.drawable.audioload1);
+                imgSharedMediaImageButton.setImageResource(R.drawable.ic_attach_photo);
+                filesSharedMediaImageButton.setImageResource(R.drawable.ic_ab_doc);
 
                 if (!sharedMediaData[1].loading && !sharedMediaData[1].endReached && sharedMediaData[1].messages.isEmpty()) {
                     sharedMediaData[selectedMode].loading = true;

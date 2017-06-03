@@ -132,6 +132,10 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
     private int contactsReimportRow;
     private int contactsSortRow;
     private int rowCount;
+    private int nearSection;
+    private int nearSection2;
+    private int enableNearRow;
+    private int mylocationRow;
 
     private final static int edit_name = 1;
     private final static int logout = 2;
@@ -240,6 +244,10 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         askQuestionRow = rowCount++;
         telegramFaqRow = rowCount++;
         sendLogsRow = rowCount++;
+        nearSection = rowCount++; //for the title of Near section
+        nearSection2 = rowCount++;
+        enableNearRow = rowCount++;
+        mylocationRow = rowCount++; //for the preferences regarding the locations necessary to have the weather
         if (BuildVars.DEBUG_VERSION) {
             //sendLogsRow = rowCount++;
             clearLogsRow = rowCount++;
@@ -440,7 +448,18 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         }
                     } else if (i == notificationRow) {
                         presentFragment(new NotificationsSettingsActivity());
-                    } else if (i == backgroundRow) {
+                    } else if(i == mylocationRow){
+                        presentFragment(new myLocationSettingsActivity());
+                    } else if(i == enableNearRow){
+                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                        boolean send = preferences.getBoolean("enable_near", false);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putBoolean("enable_near", !send);
+                        editor.commit();
+                        if (view instanceof TextCheckCell) {
+                            ((TextCheckCell) view).setChecked(!send);
+                        }
+                    }else if (i == backgroundRow) {
                         presentFragment(new WallpapersActivity());
                     } else if (i == askQuestionRow) {
                         if (getParentActivity() == null) {
@@ -1044,8 +1063,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
 
         @Override
         public boolean isEnabled(int i) {
-            return i == textSizeRow || i == enableAnimationsRow || i == notificationRow || i == backgroundRow || i == numberRow ||
-                    i == askQuestionRow || i == sendLogsRow || i == sendByEnterRow || i == privacyRow || i == wifiDownloadRow ||
+            return i == textSizeRow || i == enableAnimationsRow || i == notificationRow || i == mylocationRow || i == backgroundRow || i == numberRow ||
+                    i == askQuestionRow || i == sendLogsRow || i == sendByEnterRow || i == enableNearRow || i == privacyRow || i == wifiDownloadRow ||
                     i == mobileDownloadRow || i == clearLogsRow || i == roamingDownloadRow || i == languageRow || i == usernameRow ||
                     i == switchBackendButtonRow || i == telegramFaqRow || i == contactsSortRow || i == contactsReimportRow || i == saveToGalleryRow;
         }
@@ -1111,7 +1130,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     textCell.setTextAndValue(LocaleController.getString("SortBy", R.string.SortBy), value, true);
                 } else if (i == notificationRow) {
                     textCell.setText(LocaleController.getString("NotificationsAndSounds", R.string.NotificationsAndSounds), true);
-                } else if (i == backgroundRow) {
+                } else if(i == mylocationRow){
+                    textCell.setText("My places", true);
+                }else if (i == backgroundRow) {
                     textCell.setText(LocaleController.getString("ChatBackground", R.string.ChatBackground), true);
                 } else if (i == sendLogsRow) {
                     textCell.setText(LocaleController.getString("SendLogs", R.string.SendLogs), true);
@@ -1139,7 +1160,9 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     textCell.setTextAndCheck(LocaleController.getString("EnableAnimations", R.string.EnableAnimations), preferences.getBoolean("view_animations", true), false);
                 } else if (i == sendByEnterRow) {
                     textCell.setTextAndCheck(LocaleController.getString("SendByEnter", R.string.SendByEnter), preferences.getBoolean("send_by_enter", false), false);
-                } else if (i == saveToGalleryRow) {
+                } else if(i == enableNearRow){
+                    textCell.setTextAndCheck("Enable Near", preferences.getBoolean("boh",true), false);
+                }else if (i == saveToGalleryRow) {
                     textCell.setTextAndCheck(LocaleController.getString("SaveToGallerySettings", R.string.SaveToGallerySettings), MediaController.getInstance().canSaveToGallery(), false);
                 }
             } else if (type == 4) {
@@ -1156,6 +1179,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                     ((HeaderCell) view).setText(LocaleController.getString("AutomaticMediaDownload", R.string.AutomaticMediaDownload));
                 } else if (i == numberSectionRow) {
                     ((HeaderCell) view).setText(LocaleController.getString("Info", R.string.Info));
+                } else if(i == nearSection2){
+                    ((HeaderCell) view).setText("Near");
                 }
             } else if (type == 5) {
                 if (view == null) {
@@ -1240,17 +1265,17 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         public int getItemViewType(int i) {
             if (i == emptyRow || i == overscrollRow) {
                 return 0;
-            } if (i == settingsSectionRow || i == supportSectionRow || i == messagesSectionRow || i == mediaDownloadSection || i == contactsSectionRow) {
+            } if (i == settingsSectionRow || i == supportSectionRow || i == nearSection || i == messagesSectionRow || i == mediaDownloadSection || i == contactsSectionRow) {
                 return 1;
-            } else if (i == enableAnimationsRow || i == sendByEnterRow || i == saveToGalleryRow) {
+            } else if (i == enableAnimationsRow || i == sendByEnterRow || i == saveToGalleryRow || i == enableNearRow) {
                 return 3;
-            } else if (i == notificationRow || i == backgroundRow || i == askQuestionRow || i == sendLogsRow || i == privacyRow || i == clearLogsRow || i == switchBackendButtonRow || i == telegramFaqRow || i == contactsReimportRow || i == textSizeRow || i == languageRow || i == contactsSortRow) {
+            } else if (i == notificationRow || i==mylocationRow || i == backgroundRow || i == askQuestionRow || i == sendLogsRow || i == privacyRow || i == clearLogsRow || i == switchBackendButtonRow || i == telegramFaqRow || i == contactsReimportRow || i == textSizeRow || i == languageRow || i == contactsSortRow) {
                 return 2;
             } else if (i == versionRow) {
                 return 5;
             } else if (i == wifiDownloadRow || i == mobileDownloadRow || i == roamingDownloadRow || i == numberRow || i == usernameRow) {
                 return 6;
-            } else if (i == settingsSectionRow2 || i == messagesSectionRow2 || i == supportSectionRow2 || i == numberSectionRow || i == mediaDownloadSection2) {
+            } else if (i == settingsSectionRow2 || i == messagesSectionRow2 || i == supportSectionRow2 || i == numberSectionRow || i == nearSection2 || i == mediaDownloadSection2) {
                 return 4;
             } else {
                 return 2;

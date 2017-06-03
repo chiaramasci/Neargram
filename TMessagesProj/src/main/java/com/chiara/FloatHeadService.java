@@ -152,6 +152,7 @@ public class FloatHeadService extends Service {
 
                         //create Intent to class ChatChatHead.java
                         Intent intent = new Intent(getApplicationContext(),LaunchActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                         intent.putExtras(args);
                         startActivity(intent);
 
@@ -170,6 +171,7 @@ public class FloatHeadService extends Service {
 
                         Intent intent = new Intent(getApplicationContext(),LaunchActivity.class);
                         intent.putExtras(args);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                         startActivity(intent);
                         open = false;
                     }

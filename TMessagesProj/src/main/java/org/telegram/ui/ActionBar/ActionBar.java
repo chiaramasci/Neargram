@@ -493,7 +493,7 @@ public class ActionBar extends FrameLayout {
         //
         //SharedPreferences themePrefs = ApplicationLoader.applicationContext.getSharedPreferences(AndroidUtilities.THEME_PREFS, Activity.MODE_PRIVATE);
         //setBackgroundColor(themePrefs.getInt("themeColor", 0x000000));
-        setBackgroundColor(AndroidUtilities.getIntColor("themeColor"));
+        setBackgroundColor(0xffe94581);
         //
     }
 

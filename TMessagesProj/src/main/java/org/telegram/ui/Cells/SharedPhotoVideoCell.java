@@ -235,21 +235,21 @@ public class SharedPhotoVideoCell extends FrameLayoutFixed {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int itemWidth;
         if (AndroidUtilities.isTablet()) {
-            itemWidth = (AndroidUtilities.dp(490) - ((itemsCount + 1) * AndroidUtilities.dp(4))) / itemsCount;
+            itemWidth = (AndroidUtilities.dp(490)) / 3;
         } else {
-            itemWidth = (AndroidUtilities.displaySize.x - ((itemsCount + 1) * AndroidUtilities.dp(4))) / itemsCount;
+            itemWidth = (AndroidUtilities.displaySize.x) / 3;
         }
 
         for (int a = 0; a < itemsCount; a++) {
             LayoutParams layoutParams = (LayoutParams) photoVideoViews[a].getLayoutParams();
-            layoutParams.topMargin = isFirst ? 0 : AndroidUtilities.dp(4);
-            layoutParams.leftMargin = (itemWidth + AndroidUtilities.dp(4)) * a + AndroidUtilities.dp(4);
+            layoutParams.topMargin = isFirst ? 0 : AndroidUtilities.dp(0);
+            layoutParams.leftMargin = (itemWidth + AndroidUtilities.dp(0)) * a + AndroidUtilities.dp(0);
             layoutParams.width = itemWidth;
             layoutParams.height = itemWidth;
             layoutParams.gravity = Gravity.TOP | Gravity.LEFT;
             photoVideoViews[a].setLayoutParams(layoutParams);
         }
 
-        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec((isFirst ? 0 : AndroidUtilities.dp(4)) + itemWidth, MeasureSpec.EXACTLY));
+        super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec((isFirst ? 0 : AndroidUtilities.dp(0)) + itemWidth, MeasureSpec.EXACTLY));
     }
 }

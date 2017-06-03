@@ -108,9 +108,9 @@ public class DrawerLayoutAdapter extends BaseAdapter {
                 actionCell.setTextAndIcon(LocaleController.getString("Theming", R.string.Theming), R.drawable.menu_theming);
             } else if (i == 8) {
                 actionCell.setTextAndIcon(LocaleController.getString("Settings", R.string.Settings), R.drawable.menu_settings);
-            } else if (i == communityRow) {
+            } /*else if (i == communityRow) {
                 actionCell.setTextAndIcon(LocaleController.getString("Community", R.string.Community), R.drawable.menu_forum);
-            } /*else if (i == 10) {
+            }*/ /*else if (i == 10) {
                 actionCell.setTextAndIcon(LocaleController.getString("TelegramFaq", R.string.TelegramFaq), R.drawable.menu_help);
             }*/
         }  else if (type == versionType) {
@@ -118,7 +118,7 @@ public class DrawerLayoutAdapter extends BaseAdapter {
             if (i == versionRow) {
                 try {
                     PackageInfo pInfo = ApplicationLoader.applicationContext.getPackageManager().getPackageInfo(ApplicationLoader.applicationContext.getPackageName(), 0);
-                    ((TextInfoCell) view).setText(String.format(Locale.US, LocaleController.getString("TelegramForAndroid", R.string.TelegramForAndroid)+" v%s (%d)", pInfo.versionName, pInfo.versionCode));
+                    ((TextInfoCell) view).setText(String.format(Locale.US, LocaleController.getString("TelegramForAndroid", R.string.AppName)+" v%s (%d)", pInfo.versionName, pInfo.versionCode));
                 } catch (Exception e) {
                     FileLog.e("tmessages", e);
                 }
