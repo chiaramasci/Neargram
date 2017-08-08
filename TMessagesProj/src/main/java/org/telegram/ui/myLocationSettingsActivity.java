@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -28,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -143,8 +145,10 @@ public class myLocationSettingsActivity extends BaseFragment implements Notifica
                     if(i == homeRow){
                         AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
                         builder.setTitle("Home");
+                        final ViewGroup.LayoutParams lparams = new ViewGroup.LayoutParams(50,30);
                         final EditText input = new EditText(getParentActivity());
                         input.setHint("Insert city");
+                        input.setLayoutParams(lparams);
                         builder.setView(input);
                         builder.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
                             @Override
@@ -274,6 +278,11 @@ public class myLocationSettingsActivity extends BaseFragment implements Notifica
             }
         }
         return fragmentView;
+    }
+
+    public static int dpToPx(int dp)
+    {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
     @Override

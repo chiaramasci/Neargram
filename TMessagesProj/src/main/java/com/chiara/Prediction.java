@@ -57,7 +57,7 @@ public class Prediction {
             contextVector.add("Entertainment");
             contextVector.add("Commute");
 
-            FastVector weatherVector = new FastVector(7);
+            FastVector weatherVector = new FastVector(8);
             weatherVector.add("Fog");
             weatherVector.add("Snow");
             weatherVector.add("Clouds");
@@ -65,6 +65,7 @@ public class Prediction {
             weatherVector.add("Drizzle");
             weatherVector.add("Mist");
             weatherVector.add("Rain");
+            weatherVector.add("Thunderstorm");
 
             FastVector emotionVector = new FastVector(3);
             emotionVector.add("positive");

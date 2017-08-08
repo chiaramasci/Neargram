@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Devmil (Michael Lamers) 
+ * Copyright (C) 2011 Devmil (Michael Lamers)
  * Mail: develmil@googlemail.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,12 +38,12 @@ public class ColorSelectorView extends LinearLayout {
 	private org.telegram.ui.Components.HsvSelectorView hsvSelector;
 	private org.telegram.ui.Components.HexSelectorView hexSelector;
 	private TabHost tabs;
-	
+
 	private int maxHeight = 0;
 	private int maxWidth = 0;
 
 	private int color;
-	
+
 	private OnColorChangedListener listener;
 
 	public ColorSelectorView(Context context) {
@@ -55,13 +55,13 @@ public class ColorSelectorView extends LinearLayout {
 		super(context, attrs);
 		init();
 	}
- 
+
 	public void setColor(int color) {
 		setColor(color, null);
 	}
-	
+
 	public void setDialog(Dialog d) {
-		/*hexSelector.setDialog(d); */
+		hexSelector.setDialog(d);
 	}
 
 	private void setColor(int color, View sender) {
@@ -87,7 +87,7 @@ public class ColorSelectorView extends LinearLayout {
 		View contentView = inflater.inflate(R.layout.color_colorselectview,
 				null);
 
-		/*addView(contentView, new LayoutParams(LayoutParams.FILL_PARENT,
+		addView(contentView, new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.FILL_PARENT));
 
 		hsvSelector = new HsvSelectorView(getContext());
@@ -139,22 +139,22 @@ public class ColorSelectorView extends LinearLayout {
 				.setContent(factory);
 		//TabSpec hexTab = tabs.newTabSpec(HEX_TAG).setIndicator("HEX", getContext().getResources().getDrawable(R.drawable.hex32))
 		//.setContent(factory);
-		
+
 		TabSpec hexTab = tabs.newTabSpec(HEX_TAG).setIndicator(createTabView(tabs.getContext(), HEX_TAG))
-		.setContent(factory);
+				.setContent(factory);
 		tabs.addTab(hsvTab);
 		tabs.addTab(rgbTab);
-		tabs.addTab(hexTab);*/
+		tabs.addTab(hexTab);
 	}
 
 	private static View createTabView(final Context context, final String text) {
-		    View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
-		    TextView tv = (TextView) view.findViewById(R.id.tabsText);
-		    tv.setText(text);
-		    return view;
-		}
+		View view = LayoutInflater.from(context).inflate(R.layout.tabs_bg, null);
+		TextView tv = (TextView) view.findViewById(R.id.tabsText);
+		tv.setText(text);
+		return view;
+	}
 
-	
+
 	class ColorTabContentFactory implements TabContentFactory {
 		@Override
 		public View createTabContent(String tag) {
@@ -171,31 +171,31 @@ public class ColorSelectorView extends LinearLayout {
 			return null;
 		}
 	}
-	
+
 	private void onColorChanged()
 	{
 		if(listener != null)
 			listener.colorChanged(getColor());
 	}
-	
+
 	public void setOnColorChangedListener(OnColorChangedListener listener)
 	{
 		this.listener = listener;
 	}
-	
+
 	public interface OnColorChangedListener
 	{
 		public void colorChanged(int color);
 	}
-	
+
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		/*if(HSV_TAG.equals(tabs.getCurrentTabTag()))
+		if(HSV_TAG.equals(tabs.getCurrentTabTag()))
 		{
 			maxHeight = getMeasuredHeight();
 			maxWidth = getMeasuredWidth();
-		}*/
+		}
 		setMeasuredDimension(maxWidth, maxHeight);
 	}
 }

@@ -235,10 +235,10 @@ public class ThemingActivity extends BaseFragment {
                                     if (selectedBackground == 1000001) {
                                         //File toFile = new File(ApplicationLoader.applicationContext.getFilesDir(), "wallpaper.jpg");
                                         //if (!toFile.exists()) {
-                                            SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putInt("selectedBackground", 113);
-                                            editor.putInt("selectedColor", 0);
-                                            editor.commit();
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putInt("selectedBackground", 113);
+                                        editor.putInt("selectedColor", 0);
+                                        editor.commit();
                                         //}
                                     }
                                 }
@@ -248,10 +248,10 @@ public class ThemingActivity extends BaseFragment {
                                         AndroidUtilities.runOnUIThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                                    if(AndroidUtilities.loadPrefFromSD(getParentActivity(), xmlFile) == 4){
-                                                        AndroidUtilities.loadWallpaperFromSDPath(getParentActivity(), wName);
-                                                        AndroidUtilities.restartApp();
-                                                    }
+                                                if(AndroidUtilities.loadPrefFromSD(getParentActivity(), xmlFile) == 4){
+                                                    AndroidUtilities.loadWallpaperFromSDPath(getParentActivity(), wName);
+                                                    AndroidUtilities.restartApp();
+                                                }
                                             }
                                         });
                                     }
@@ -276,29 +276,29 @@ public class ThemingActivity extends BaseFragment {
                                 }
                                 reseting = true;
                                 AndroidUtilities.runOnUIThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                reseting = false;
-                                                SharedPreferences themePrefs = ApplicationLoader.applicationContext.getSharedPreferences(AndroidUtilities.THEME_PREFS, Activity.MODE_PRIVATE);
-                                                SharedPreferences.Editor editor = themePrefs.edit();
-                                                editor.clear();
-                                                editor.commit();
-                                                //Stock Background
-                                                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                                                editor = preferences.edit();
-                                                editor.putInt("selectedBackground", 1000001);
-                                                editor.putInt("selectedColor", 0);
-                                                editor.commit();
-                                                File toFile = new File(ApplicationLoader.applicationContext.getFilesDir(), "wallpaper.jpg");
-                                                if (toFile.exists()) {
-                                                    toFile.delete();
-                                                }
-                                                fixLayout();
-                                                if (getParentActivity() != null) {
-                                                    Toast toast = Toast.makeText(getParentActivity(), LocaleController.getString("ResetThemeToastText", R.string.ResetThemeToastText), Toast.LENGTH_SHORT);
-                                                    toast.show();
-                                                }
-                                            }
+                                    @Override
+                                    public void run() {
+                                        reseting = false;
+                                        SharedPreferences themePrefs = ApplicationLoader.applicationContext.getSharedPreferences(AndroidUtilities.THEME_PREFS, Activity.MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = themePrefs.edit();
+                                        editor.clear();
+                                        editor.commit();
+                                        //Stock Background
+                                        SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                                        editor = preferences.edit();
+                                        editor.putInt("selectedBackground", 1000001);
+                                        editor.putInt("selectedColor", 0);
+                                        editor.commit();
+                                        File toFile = new File(ApplicationLoader.applicationContext.getFilesDir(), "wallpaper.jpg");
+                                        if (toFile.exists()) {
+                                            toFile.delete();
+                                        }
+                                        fixLayout();
+                                        if (getParentActivity() != null) {
+                                            Toast toast = Toast.makeText(getParentActivity(), LocaleController.getString("ResetThemeToastText", R.string.ResetThemeToastText), Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        }
+                                    }
                                 });
                                 AndroidUtilities.needRestart = true;
                             }
@@ -351,7 +351,6 @@ public class ThemingActivity extends BaseFragment {
     public void onActivityResultFragment(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == 0) {
-
             } else if (requestCode == 22) {
                 if (data == null || data.getData() == null) {
                     showAttachmentError();
@@ -375,13 +374,11 @@ public class ThemingActivity extends BaseFragment {
     }*/
 /*
     private void saveThemeDialog(){
-
         LayoutInflater li = LayoutInflater.from(getParentActivity());
         View promptsView = li.inflate(R.layout.editbox_dialog, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getParentActivity());
         alertDialogBuilder.setView(promptsView);
         final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-
         alertDialogBuilder
                 .setCancelable(false)
                 .setPositiveButton(R.string.ok,

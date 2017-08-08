@@ -452,12 +452,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                         presentFragment(new myLocationSettingsActivity());
                     } else if(i == enableNearRow){
                         SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
-                        boolean send = preferences.getBoolean("enable_near", false);
+                        boolean enable = preferences.getBoolean("enable_near", false);
                         SharedPreferences.Editor editor = preferences.edit();
-                        editor.putBoolean("enable_near", !send);
+                        editor.putBoolean("enable_near", !enable);
                         editor.commit();
                         if (view instanceof TextCheckCell) {
-                            ((TextCheckCell) view).setChecked(!send);
+                            ((TextCheckCell) view).setChecked(!enable);
                         }
                     }else if (i == backgroundRow) {
                         presentFragment(new WallpapersActivity());
@@ -1161,7 +1161,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 } else if (i == sendByEnterRow) {
                     textCell.setTextAndCheck(LocaleController.getString("SendByEnter", R.string.SendByEnter), preferences.getBoolean("send_by_enter", false), false);
                 } else if(i == enableNearRow){
-                    textCell.setTextAndCheck("Enable Near", preferences.getBoolean("boh",true), false);
+                    textCell.setTextAndCheck("Enable Near", preferences.getBoolean("enable_near",false), false);
                 }else if (i == saveToGalleryRow) {
                     textCell.setTextAndCheck(LocaleController.getString("SaveToGallerySettings", R.string.SaveToGallerySettings), MediaController.getInstance().canSaveToGallery(), false);
                 }

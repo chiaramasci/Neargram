@@ -3,7 +3,7 @@
 <!--https://www.transifex.com/projects/p/telegram/language/it/members/-->
 
 <resources>
-    <string name="AppName">Telegram+</string>
+    <string name="AppName">Neargram</string>
     <string name="LanguageName">Italiano</string>
     <string name="LanguageNameInEnglish">Italian</string>
     <string name="LanguageCode">it</string>
@@ -504,17 +504,16 @@
     <string name="ForwardMessagesToGroup">Inoltra messaggi a %1$s?</string>
     <string name="FeatureUnavailable">Ci spiace, questa funzione non è disponibile nel tuo paese.</string>
     <!--Intro view-->
-    <string name="Page1Title">Telegram+</string>
-    <string name="Page2Title">Veloce</string>
-    <string name="Page3Title">Gratuito</string>
-    <string name="Page4Title">Sicuro</string>
+    <string name="Page1Title">Neargram</string>
+    <string name="Page2Title">Telegram al settimo cielo</string>
+    <string name="Page3Title">Connettiamo persone, non solo smartphones</string>
+    <string name="Page4Title">Curioso?</string>
     <string name="Page5Title">Potente</string>
     <string name="Page6Title">Basato sul cloud</string>
     <string name="Page7Title">Privato</string>
-    <string name="Page1Message">L\'app di messaggi <![CDATA[<b>più veloce</b>]]> al mondo.<![CDATA[<br/>]]>È <![CDATA[<b>gratuita</b>]]> e <![CDATA[<b>sicura</b>]]>.</string>
-    <string name="Page2Message"><![CDATA[<b>Telegram+</b>]]> consegna i messaggi più<![CDATA[<br/>]]>velocemente di qualsiasi altra app.</string>
-    <string name="Page3Message"><![CDATA[<b>Telegram+</b>]]> sarà sempre gratuito.<![CDATA[<br/>]]>Nessuna pubblicità. Nessun abbonamento.</string>
-    <string name="Page4Message"><![CDATA[<b>Telegram+</b>]]> protegge i tuoi messaggi<![CDATA[<br/>]]>dagli attacchi degli hacker.</string>
+    <string name="Page1Message">La sicurezza di Telegram resa umana con la tecnologia Near</string>
+    <string name="Page2Message">Una messaggistica ricca di tutto ciò che non hai mai visto</string>
+    <string name="Page4Message">Ammira la magia</string>
     <string name="Page5Message"><![CDATA[<b>Telegram+</b>]]> non ha limiti sulle dimensioni<![CDATA[<br/>]]>dei tuoi file multimediali e delle chat.</string>
     <string name="Page6Message"><![CDATA[<b>Telegram+</b>]]> ti consente di accedere<![CDATA[<br/>]]>ai messaggi da più dispositivi.</string>
     <string name="Page7Message"><![CDATA[<b>Telegram+</b>]]> cifra in maniera sicura i messaggi<![CDATA[<br/>]]>e può far sì che si autodistruggano.</string>

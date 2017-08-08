@@ -3,7 +3,7 @@
 <!--Translation by Borja Campina, Edited by Victor Espinoza and Francisco Vila-->
 
 <resources>
-    <string name="AppName">Telegram+</string>
+    <string name="AppName">Neargram</string>
     <string name="LanguageName">Español</string>
     <string name="LanguageNameInEnglish">Spanish</string>
     <string name="LanguageCode">es</string>
@@ -513,7 +513,6 @@
     <string name="Page7Title">Privada</string>
     <string name="Page1Message">La aplicación de mensajería más<![CDATA[<br/><b>veloz</b>]]> del mundo. Es <![CDATA[<b>gratis</b>]]> y <![CDATA[<b>segura</b>]]>.<![CDATA[<br/>]]>¡Y también <![CDATA[<b>tematizable</b>]]>!</string>
     <string name="Page2Message"><![CDATA[<b>Telegram+</b>]]> entrega mensajes más<![CDATA[<br/>]]>rápido que cualquier otra aplicación.</string>
-    <string name="Page3Message"><![CDATA[<b>Telegram+</b>]]> es gratis para siempre.<![CDATA[<br/>]]>Sin publicidad ni suscripciones.</string>
     <string name="Page4Message"><![CDATA[<b>Telegram+</b>]]> mantiene tus mensajes<![CDATA[<br/>]]>a salvo del ataque de hackers.</string>
     <string name="Page5Message"><![CDATA[<b>Telegram+</b>]]> no tiene límites en<![CDATA[<br/>]]>el tamaño de tus chats y archivos.</string>
     <string name="Page6Message"><![CDATA[<b>Telegram+</b>]]> te permite acceder a tus<![CDATA[<br/>]]>mensajes desde múltiples dispositivos.</string>

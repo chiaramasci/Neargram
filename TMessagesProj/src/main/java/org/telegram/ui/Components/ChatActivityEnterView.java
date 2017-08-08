@@ -694,6 +694,10 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
 
             if (delegate != null) {
                 delegate.onMessageSend();
+                SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Activity.MODE_PRIVATE);
+                Boolean nearEnabled = preferences.getBoolean("enable_near",false);
+
+                if(nearEnabled){
                 try {
                     getData();
                     resetData();
@@ -701,7 +705,7 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
                     e.printStackTrace();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                }
+                }}
 
             }
         }
@@ -1071,8 +1075,29 @@ public class ChatActivityEnterView extends LinearLayout implements NotificationC
                     .execute(latAndLon)
                     .get();
         }else if (context == "Commute"){
-            String lat = preferences.getString("latHome","");
-            String lon = preferences.getString("longHome","");
+            String latHome = preferences.getString("latHome","");
+            String lonHome = preferences.getString("longHome","");
+            String latWork = preferences.getString("latWork","");
+            String lonWork = preferences.getString("longWork","");
+
+            String lat = "";
+            String lon = "";
+
+            if(Double.parseDouble(latHome) >= Double.parseDouble(latWork)){
+                lat = Double.toString(Double.parseDouble(latHome) - Double.parseDouble(latWork));
+            } else {
+                lat = Double.toString(Double.parseDouble(latWork) - Double.parseDouble(latHome));
+            }
+
+            if(Double.parseDouble(lonHome) >= Double.parseDouble(lonWork)){
+                lon = Double.toString(Double.parseDouble(lonHome) - Double.parseDouble(lonWork));
+            } else {
+                lon = Double.toString(Double.parseDouble(lonWork) - Double.parseDouble(lonHome));
+            }
+
+            Log.i("lon",lon);
+            Log.i("lat",lat);
+
             String[] latAndLon = {lat,lon};
             mWeather = new getWeather()
                     .execute(latAndLon)
